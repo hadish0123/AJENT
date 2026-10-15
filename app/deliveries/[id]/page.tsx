@@ -50,7 +50,7 @@ export default async function RailwayDeliveryPage({
             <div><dt>Build</dt><dd>{plan.configuration.buildCommand}</dd></div>
             <div><dt>Start</dt><dd>{plan.configuration.startCommand}</dd></div>
             <div><dt>Health</dt><dd>{plan.configuration.healthcheckPath}</dd></div>
-            <div><dt>Restart</dt><dd>{plan.configuration.restartPolicyType}</dd></div>
+            <div><dt>Restart</dt><dd>{plan.configuration.restartPolicyType}</dd></div>\n            <div><dt>Variables</dt><dd>{plan.requiredVariables.join(", ")}</dd></div>
           </dl>
         </article>
         <article className="detailCard">
