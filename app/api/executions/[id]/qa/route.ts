@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createQARunSchema } from "@/lib/qa";
 import { createQARun, listExecutionQARuns } from "@/lib/qa-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -39,6 +40,7 @@ export async function POST(request: Request, context: Context) {
       parsed.data.requiredChecks,
     );
 
+    await auditMutation(request, { action: "qa.create", resourceType: "qa", resourceId: run.id, metadata: { executionId: id, source: run.source } });
     return NextResponse.json({ run }, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to create QA run.";
