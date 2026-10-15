@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createExecutionSchema } from "@/lib/execution";
 import { createGitHubExecution, getExecutionByRun } from "@/lib/execution-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -38,6 +39,7 @@ export async function POST(request: Request, context: Context) {
       parsed.data.baseBranch,
     );
 
+    await auditMutation(request, { action: "execution.create", resourceType: "execution", resourceId: execution.id, metadata: { runId: id, repository: execution.repository } });
     return NextResponse.json({ execution }, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to create GitHub execution.";
