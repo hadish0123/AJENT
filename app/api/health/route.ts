@@ -4,13 +4,13 @@ export function GET() {
   return NextResponse.json({
     ok: true,
     service: "hadi-dev-studio",
-    version: "0.5.0",
-    phase: "qa-browser-testing",
+    version: "0.6.0",
+    phase: "railway-delivery",
     capabilities: {
       agentCouncil: true,
       githubExecution: true,
       qaBrowser: true,
-      railwayDeployment: false,
+      railwayDelivery: true,
     },
     timestamp: new Date().toISOString(),
   });
