@@ -58,7 +58,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const authRequired = process.env.HADI_STUDIO_AUTH_REQUIRED === "true";
+  const setting = process.env.HADI_STUDIO_AUTH_REQUIRED;\n  const authRequired = setting === "true" || (process.env.NODE_ENV === "production" && setting !== "false");
   if (!authRequired || PUBLIC_PATHS.has(pathname)) {
     return withSecurityHeaders(NextResponse.next());
   }
