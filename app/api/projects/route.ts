@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
+import { auditMutation } from "@/lib/audit";
 import { insertProject, listProjects } from "@/lib/db";
 import {
   buildInitialRequirements,
@@ -53,6 +54,7 @@ export async function POST(request: Request) {
     };
 
     const saved = await insertProject(project);
+    await auditMutation(request, { action: "project.create", resourceType: "project", resourceId: saved.id, metadata: { type: saved.type } });
     return NextResponse.json({ project: saved }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
