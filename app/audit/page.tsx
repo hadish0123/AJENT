@@ -4,7 +4,7 @@ import { listAuditEvents } from "@/lib/audit-db";
 export const dynamic = "force-dynamic";
 
 export default async function AuditPage() {
-  let events = [];
+  let events: Awaited<ReturnType<typeof listAuditEvents>> = [];
   try {
     events = await listAuditEvents(150);
   } catch {
