@@ -1,6 +1,6 @@
 {
   "name": "hadi-dev-studio",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +10,7 @@
     "test": "npm run test:unit",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "test:qa": "npm run typecheck && npm run test:unit && npm run build && npm run test:e2e"
+    "test:qa": "npm run typecheck && npm run test:unit && npm run build && npm run test:e2e",\n    "test:acceptance": "playwright test tests/e2e/acceptance.spec.ts"
   },
   "dependencies": {
     "next": "^15.5.0",
