@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { getDatabase } from "./database";
+import { parseJsonColumn } from "./json-column";
 
 export type AuditOutcome = "success" | "failure";
 
@@ -73,7 +74,7 @@ function normalize(row: AuditRow): AuditEvent {
     resourceId: row.resource_id,
     requestId: row.request_id,
     outcome: row.outcome,
-    metadata: row.metadata,
+    metadata: parseJsonColumn<Record<string, unknown>>(row.metadata),
     createdAt: new Date(row.created_at).toISOString(),
   };
 }
