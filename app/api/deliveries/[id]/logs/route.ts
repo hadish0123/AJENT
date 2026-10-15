@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { railwayLogSchema } from "@/lib/railway-delivery";
 import { appendRailwayLog } from "@/lib/railway-delivery-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,7 @@ export async function POST(request: Request, context: Context) {
     }
 
     const log = await appendRailwayLog(id, parsed.data);
+    await auditMutation(request, { action: "delivery.log", resourceType: "delivery", resourceId: id, metadata: { stream: log.stream, severity: log.severity } });
     return NextResponse.json({ log }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
