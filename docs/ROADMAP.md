@@ -36,10 +36,16 @@
 
 ## Phase 04 — GitHub execution — 50%
 
-- Branch strategy
-- File changes
-- Commit/PR lifecycle
-- Review checks
+- [x] Execution plan generated from Lead Builder output
+- [x] Deterministic working-branch strategy
+- [x] Durable GitHub execution state
+- [x] File-change tracking
+- [x] Commit SHA tracking
+- [x] Pull-request metadata lifecycle
+- [x] Required review/check records
+- [x] Merge-readiness gate
+- [x] GitHub tool handoff contract for ChatGPT
+- [x] Execution dashboard and APIs
 
 ## Phase 05 — QA & browser testing — 65%
 
