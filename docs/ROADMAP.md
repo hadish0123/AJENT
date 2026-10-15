@@ -23,10 +23,16 @@
 
 ## Phase 03 — Agent orchestration — 35%
 
-- Agent run model
-- Internal debate/review stages
-- Lead Builder aggregation
-- Structured outputs
+- [x] Agent run model
+- [x] Stage planner by project type
+- [x] Analysis / debate / review / lead stages
+- [x] Structured agent output contract
+- [x] Idempotent per-agent stage outputs
+- [x] Automatic stage advancement
+- [x] Consensus calculation
+- [x] Lead Builder aggregation and final report
+- [x] Agent Council dashboard
+- [x] Tool-facing run APIs
 
 ## Phase 04 — GitHub execution — 50%
 

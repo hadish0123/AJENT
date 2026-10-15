@@ -1,4 +1,4 @@
-import postgres from "postgres";
+import { getDatabase } from "./database";
 import type { ProjectRecord } from "./projects";
 
 type ProjectRow = {
@@ -16,30 +16,11 @@ type ProjectRow = {
   updated_at: Date | string;
 };
 
-let client: ReturnType<typeof postgres> | null = null;
 let initialized = false;
 
-function getClient() {
-  const url = process.env.DATABASE_URL;
-  if (!url) {
-    throw new Error("DATABASE_URL is not configured.");
-  }
-
-  if (!client) {
-    client = postgres(url, {
-      max: 5,
-      idle_timeout: 20,
-      connect_timeout: 10,
-      prepare: false,
-    });
-  }
-
-  return client;
-}
-
-async function ensureSchema() {
+export async function ensureProjectSchema() {
   if (initialized) return;
-  const sql = getClient();
+  const sql = getDatabase();
 
   await sql`
     CREATE TABLE IF NOT EXISTS projects (
@@ -84,8 +65,8 @@ function normalize(row: ProjectRow): ProjectRecord {
 }
 
 export async function listProjects(): Promise<ProjectRecord[]> {
-  await ensureSchema();
-  const sql = getClient();
+  await ensureProjectSchema();
+  const sql = getDatabase();
   const rows = await sql`
     SELECT *
     FROM projects
@@ -97,8 +78,8 @@ export async function listProjects(): Promise<ProjectRecord[]> {
 }
 
 export async function getProject(id: string): Promise<ProjectRecord | null> {
-  await ensureSchema();
-  const sql = getClient();
+  await ensureProjectSchema();
+  const sql = getDatabase();
   const rows = await sql`
     SELECT *
     FROM projects
@@ -110,8 +91,8 @@ export async function getProject(id: string): Promise<ProjectRecord | null> {
 }
 
 export async function insertProject(project: ProjectRecord): Promise<ProjectRecord> {
-  await ensureSchema();
-  const sql = getClient();
+  await ensureProjectSchema();
+  const sql = getDatabase();
 
   const rows = await sql`
     INSERT INTO projects (
@@ -142,8 +123,8 @@ export async function updateProject(
   id: string,
   patch: Partial<Pick<ProjectRecord, "name" | "brief" | "status">>,
 ): Promise<ProjectRecord | null> {
-  await ensureSchema();
-  const sql = getClient();
+  await ensureProjectSchema();
+  const sql = getDatabase();
 
   const current = await getProject(id);
   if (!current) return null;

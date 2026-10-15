@@ -19,7 +19,7 @@ Use ChatGPT as the reasoning/orchestration layer and GitHub + Railway + browser 
 
 ## Current phase
 
-Project Intake / Phase 02 — 20%.
+Agent Orchestration / Phase 03 — 35%.
 
 ## Local development
 
@@ -51,10 +51,19 @@ DATABASE_URL=postgresql://user:password@host:5432/database
 - `GET /api/projects/:id`
 - `PATCH /api/projects/:id`
 
+## Agent Council API
+
+- `GET /api/projects/:id/runs`
+- `POST /api/projects/:id/runs`
+- `GET /api/runs/:id`
+- `POST /api/runs/:id/outputs`
+
+The council runs through `analysis → debate → review → lead`. ChatGPT executes the logical roles and submits structured outputs; Phase 03 does not require a separate AI API.
+
 ## Persistence
 
-The Phase 02 persistence layer uses PostgreSQL. The application creates the required project table and index on first access. The SQL reference migration is also stored in `db/001_projects.sql`.
+PostgreSQL stores projects, agent runs and structured agent outputs. Reference migrations are stored in `db/001_projects.sql` and `db/002_agent_runs.sql`.
 
 ## Delivery status
 
-GitHub foundation and Phase 02 are complete. Railway deployment remains blocked until the connected Railway account can create new projects.
+GitHub foundation through Phase 03 is complete. Railway deployment remains blocked until the connected Railway account can create new projects.
