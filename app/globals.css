@@ -746,3 +746,116 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Phase 07 — specialist production workflows */
+.progressValue.progress92 { width: 92%; }
+
+.specialistGrid {
+  display: grid;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.specialistCard,
+.specialistProjectCard,
+.variablePolicyCard {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(18,40,59,.76), rgba(10,24,36,.68));
+  border-radius: 18px;
+}
+
+.specialistCard { padding: 24px; }
+.specialistCard > p,
+.specialistProjectCard > p,
+.variablePolicyCard p,
+.variablePolicyCard small {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.specialistCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.specialistCardHeader h2 {
+  margin: 7px 0 0;
+  font-size: 24px;
+}
+
+.specialistColumns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.specialistColumns > div {
+  border: 1px solid var(--line);
+  background: rgba(2,12,20,.32);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.specialistColumns strong { color: #d7eaf5; }
+.specialistColumns ul {
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+.specialistMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.specialistMeta span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: #9eb7c7;
+  font-size: 10px;
+}
+
+.specialistProjectGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+
+.specialistProjectCard { padding: 20px; }
+.specialistProjectCard h3 { margin: 5px 0 0; }
+
+.specialistCheckRow,
+.specialistMiniStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.specialistCheckRow { margin-top: 16px; }
+.specialistMiniStrip { margin-bottom: 16px; }
+
+.variablePolicyCard {
+  margin-top: 12px;
+  padding: 18px;
+}
+
+.variablePolicyCard p { margin-bottom: 6px; }
+.variablePolicyCard small { display: block; }
+
+@media (max-width: 760px) {
+  .specialistColumns,
+  .specialistProjectGrid {
+    grid-template-columns: 1fr;
+  }
+  .specialistCardHeader {
+    flex-direction: column;
+  }
+}
