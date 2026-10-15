@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { getDatabase } from "./database";
 import { ensureExecutionSchema, getExecution } from "./execution-db";
+import { parseJsonColumn } from "./json-column";
 import {
   buildBrowserValidationProtocol,
   getQAGate,
@@ -132,7 +133,7 @@ function normalizeRun(row: QARunRow): QARunRecord {
     source: row.source,
     targetUrl: row.target_url,
     status: row.status,
-    requiredChecks: row.required_checks,
+    requiredChecks: parseJsonColumn<string[]>(row.required_checks),
     createdAt: new Date(row.created_at).toISOString(),
     updatedAt: new Date(row.updated_at).toISOString(),
     completedAt: row.completed_at ? new Date(row.completed_at).toISOString() : null,
@@ -162,7 +163,7 @@ function normalizeBug(row: BugRow): BugRecord {
     status: row.status,
     title: row.title,
     description: row.description,
-    reproduction: row.reproduction,
+    reproduction: parseJsonColumn<string[]>(row.reproduction),
     expected: row.expected,
     actual: row.actual,
     path: row.path,
