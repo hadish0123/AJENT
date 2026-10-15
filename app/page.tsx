@@ -22,7 +22,7 @@ export default function HomePage() {
         </a>
         <div className="topActions">
           <span className="statusPill"><i /> SYSTEM FOUNDATION</span>
-          <button className="ghostButton">Private Workspace</button>
+          <a className="ghostButton" href="/projects">Private Workspace</a>
         </div>
       </header>
 
@@ -35,7 +35,7 @@ export default function HomePage() {
             HADI Dev Studio coordinates specialist roles from requirements to production.
           </p>
           <div className="heroActions">
-            <button className="primaryButton">+ New Project</button>
+            <a className="primaryButton" href="/projects/new">+ New Project</a>
             <a className="textLink" href="#agents">View Agent Team →</a>
           </div>
         </div>
@@ -43,15 +43,15 @@ export default function HomePage() {
         <aside className="progressCard">
           <div className="progressHeader">
             <span>AJENT Foundation</span>
-            <strong>10%</strong>
+            <strong>20%</strong>
           </div>
-          <div className="progressTrack"><div className="progressValue" /></div>
+          <div className="progressTrack"><div className="progressValue progress20" /></div>
           <ul className="checkList">
             <li className="done">Plugin workflow created</li>
             <li className="done">GitHub foundation initialized</li>
             <li className="done">Agent registry online</li>
-            <li>Project persistence</li>
-            <li>Execution & test pipeline</li>
+            <li className="done">Project persistence</li>
+            <li className="done">Project intake + task graph</li>
             <li>Railway production deployment</li>
           </ul>
         </aside>
