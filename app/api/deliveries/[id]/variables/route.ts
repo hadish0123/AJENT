@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { railwayVariableSchema } from "@/lib/railway-delivery";
 import { upsertRailwayVariable } from "@/lib/railway-delivery-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,7 @@ export async function POST(request: Request, context: Context) {
     }
 
     const variable = await upsertRailwayVariable(id, parsed.data);
+    await auditMutation(request, { action: "delivery.variable", resourceType: "delivery", resourceId: id, metadata: { name: variable.name, scope: variable.scope, status: variable.status } });
     return NextResponse.json({ variable }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
