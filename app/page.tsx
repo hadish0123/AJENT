@@ -28,7 +28,7 @@ export default function HomePage() {
 
       <section className="hero">
         <div className="heroCopy">
-          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 06</span>
+          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 07</span>
           <h1>Build serious software with a private agent team.</h1>
           <p>
             ChatGPT is the brain. GitHub is the source of truth. Railway is the deployment layer.
@@ -36,24 +36,25 @@ export default function HomePage() {
           </p>
           <div className="heroActions">
             <a className="primaryButton" href="/projects/new">+ New Project</a>
-            <a className="textLink" href="#agents">View Agent Team →</a>
+            <a className="textLink" href="/specialists">Specialist Workflows →</a>
           </div>
         </div>
 
         <aside className="progressCard">
           <div className="progressHeader">
             <span>AJENT / HADI Dev Studio</span>
-            <strong>80%</strong>
+            <strong>92%</strong>
           </div>
-          <div className="progressTrack"><div className="progressValue progress80" /></div>
+          <div className="progressTrack"><div className="progressValue progress92" /></div>
           <ul className="checkList">
             <li className="done">Project intake + persistence</li>
             <li className="done">Agent council orchestration</li>
             <li className="done">GitHub execution engine</li>
             <li className="done">QA + browser validation</li>
             <li className="done">Railway delivery control plane</li>
-            <li className="done">Variables + logs + health gate</li>
-            <li>Specialist production workflows</li>
+            <li className="done">Specialist production workflows</li>
+            <li className="done">Telegram / VPN / Mobile / Game / AI routing</li>
+            <li>Production hardening</li>
           </ul>
         </aside>
       </section>
