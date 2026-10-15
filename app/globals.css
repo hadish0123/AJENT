@@ -450,3 +450,151 @@ footer {
   .runLauncher { justify-items: stretch; width: 100%; }
   .promptGrid, .outputGrid, .reportGrid, .stageStrip { grid-template-columns: 1fr; }
 }
+
+
+/* Phase 04 — GitHub execution */
+.progressValue.progress50 { width: 50%; }
+
+.executionLauncher {
+  display: grid;
+  gap: 12px;
+  max-width: 680px;
+}
+.executionInputs {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 10px;
+}
+.executionInputs input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: rgba(2,12,20,.66);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+}
+.executionInputs input:focus {
+  border-color: rgba(56,217,255,.5);
+  box-shadow: 0 0 0 3px rgba(56,217,255,.08);
+}
+
+.executionLinkCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(13,28,42,.58);
+  transition: .2s ease;
+}
+.executionLinkCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56,217,255,.34);
+}
+.executionLinkCard h3 { margin: 6px 0; }
+.executionLinkCard p { margin: 0; color: var(--muted); font-size: 12px; }
+
+.executionFacts {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+}
+.executionFacts > div {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.executionFacts dt {
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.executionFacts dd {
+  margin: 0;
+  color: #cce0eb;
+  overflow-wrap: anywhere;
+}
+.inlineMuted { color: var(--muted); }
+
+.changeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+.changeCard, .checkCard, .toolContract, .mergeGate {
+  border: 1px solid var(--line);
+  background: rgba(13,28,42,.58);
+  border-radius: 16px;
+}
+.changeCard { padding: 18px; }
+.changeCard h3 {
+  margin: 5px 0 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.changeCard p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.changeCard code {
+  display: block;
+  padding-top: 8px;
+  color: var(--cyan);
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+
+.checkGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+}
+.checkCard {
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+.checkCard > strong { text-transform: capitalize; }
+.checkCard p { margin: 0; color: var(--muted); line-height: 1.55; font-size: 12px; }
+.status-passed { color: var(--green); border-color: rgba(101,244,191,.24); }
+.status-failed { color: #ff9d9d; border-color: rgba(255,100,100,.24); }
+.status-planned, .status-pending { color: #9db4c3; }
+.status-branch_ready, .status-coding, .status-pr_open, .status-checks_running, .status-review_ready {
+  color: var(--cyan);
+  border-color: rgba(56,217,255,.25);
+}
+
+.mergeGate {
+  margin-top: 48px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.mergeGate h2 { margin: 7px 0 8px; font-size: 30px; }
+.mergeGate p { margin: 0; color: var(--muted); }
+.mergeGate.ready {
+  border-color: rgba(101,244,191,.28);
+  background: rgba(101,244,191,.05);
+}
+
+.toolContract {
+  padding: 22px;
+  color: #bdd2df;
+}
+.toolContract p { margin: 0 0 10px; }
+.toolContract ol { margin: 16px 0 0; padding-left: 20px; color: var(--muted); line-height: 1.8; }
+
+@media (max-width: 760px) {
+  .executionInputs,
+  .changeGrid,
+  .checkGrid { grid-template-columns: 1fr; }
+  .executionLinkCard,
+  .mergeGate { align-items: flex-start; flex-direction: column; }
+}
