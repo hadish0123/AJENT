@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function StartQAPanel({ executionId }: { executionId: string }) {
+export default function StartQAPanel({ executionId, requiredChecks }: { executionId: string; requiredChecks: string[] }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function StartQAPanel({ executionId }: { executionId: string }) {
         body: JSON.stringify({
           source: targetUrl ? "browser_operator" : "ci",
           targetUrl,
-          requiredChecks: ["typecheck", "unit", "build", "browser-smoke"],
+          requiredChecks,
         }),
       });
 
