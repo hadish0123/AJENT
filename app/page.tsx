@@ -21,14 +21,14 @@ export default function HomePage() {
           </span>
         </a>
         <div className="topActions">
-          <span className="statusPill"><i /> PROJECT INTAKE ONLINE</span>
+          <span className="statusPill"><i /> AGENT ORCHESTRATION ONLINE</span>
           <a className="ghostButton" href="/projects">Private Workspace</a>
         </div>
       </header>
 
       <section className="hero">
         <div className="heroCopy">
-          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 02</span>
+          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 03</span>
           <h1>Build serious software with a private agent team.</h1>
           <p>
             ChatGPT is the brain. GitHub is the source of truth. Railway is the deployment layer.
@@ -43,16 +43,16 @@ export default function HomePage() {
         <aside className="progressCard">
           <div className="progressHeader">
             <span>AJENT / HADI Dev Studio</span>
-            <strong>20%</strong>
+            <strong>35%</strong>
           </div>
-          <div className="progressTrack"><div className="progressValue progress20" /></div>
+          <div className="progressTrack"><div className="progressValue progress35" /></div>
           <ul className="checkList">
             <li className="done">Plugin workflow created</li>
-            <li className="done">GitHub foundation initialized</li>
-            <li className="done">Agent registry online</li>
-            <li className="done">Project persistence</li>
-            <li className="done">Project intake + task graph</li>
-            <li>Agent orchestration engine</li>
+            <li className="done">Project intake + persistence</li>
+            <li className="done">Agent run model</li>
+            <li className="done">Debate + review stages</li>
+            <li className="done">Lead Builder final report</li>
+            <li>GitHub execution engine</li>
           </ul>
         </aside>
       </section>
@@ -109,7 +109,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="flow">
-          {["Intake", "Plan", "Design", "Build", "Review", "Test", "Deploy"].map((item, index) => (
+          {["Intake", "Council", "Design", "Build", "Review", "Test", "Deploy"].map((item, index) => (
             <div className="flowItem" key={item}>
               <span>{index + 1}</span>
               <strong>{item}</strong>
