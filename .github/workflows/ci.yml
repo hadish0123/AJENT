@@ -12,7 +12,27 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/hadi_dev_studio
+      HADI_STUDIO_AUTH_REQUIRED: "true"
+      HADI_STUDIO_OWNER: hadi
+      HADI_STUDIO_PASSWORD: ci-owner-password
+      HADI_AUTH_SECRET: ci-auth-secret-0123456789-abcdefghijklmnopqrstuvwxyz
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: hadi_dev_studio
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d hadi_dev_studio"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,7 +57,7 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Browser smoke tests
+      - name: Browser + acceptance tests
         run: npm run test:e2e
 
       - name: Upload Playwright report
