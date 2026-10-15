@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAgentRunBundle } from "@/lib/agent-runs-db";
+import { getExecutionByRun } from "@/lib/execution-db";
 import { RUN_STAGES } from "@/lib/orchestration";
+import StartExecutionPanel from "./start-execution-panel";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +20,7 @@ export default async function AgentRunPage({ params }: { params: Promise<{ id: s
   if (!bundle) notFound();
 
   const { run, project, outputs, next } = bundle;
+  const execution = run.status === "completed" ? await getExecutionByRun(run.id) : null;
   const stageIndex = RUN_STAGES.indexOf(run.currentStage);
   const progress =
     run.status === "completed"
@@ -60,25 +63,49 @@ export default async function AgentRunPage({ params }: { params: Promise<{ id: s
       </section>
 
       {run.finalReport ? (
-        <section className="finalReport">
-          <span className="eyebrow">LEAD BUILDER FINAL</span>
-          <h2>Approved implementation direction</h2>
-          <p>{run.finalReport.executiveSummary}</p>
-          <div className="reportGrid">
-            <div>
-              <strong>Decisions</strong>
-              <ul>{run.finalReport.decisions.map((item) => <li key={item}>{item}</li>)}</ul>
+        <>
+          <section className="finalReport">
+            <span className="eyebrow">LEAD BUILDER FINAL</span>
+            <h2>Approved implementation direction</h2>
+            <p>{run.finalReport.executiveSummary}</p>
+            <div className="reportGrid">
+              <div>
+                <strong>Decisions</strong>
+                <ul>{run.finalReport.decisions.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
+              <div>
+                <strong>Risks</strong>
+                <ul>{run.finalReport.risks.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
+              <div>
+                <strong>Actions</strong>
+                <ul>{run.finalReport.actions.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
             </div>
-            <div>
-              <strong>Risks</strong>
-              <ul>{run.finalReport.risks.map((item) => <li key={item}>{item}</li>)}</ul>
+          </section>
+
+          <section className="sectionBlock">
+            <div className="sectionHeading">
+              <div>
+                <span className="eyebrow">GITHUB EXECUTION</span>
+                <h2>Move the approved plan into code.</h2>
+              </div>
             </div>
-            <div>
-              <strong>Actions</strong>
-              <ul>{run.finalReport.actions.map((item) => <li key={item}>{item}</li>)}</ul>
-            </div>
-          </div>
-        </section>
+
+            {execution ? (
+              <Link className="executionLinkCard" href={`/executions/${execution.id}`}>
+                <div>
+                  <span className="rowType">{execution.repository}</span>
+                  <h3>{execution.workingBranch}</h3>
+                  <p>PR #{execution.prNumber ?? "—"} · {execution.status}</p>
+                </div>
+                <span className={`statusTag status-${execution.status}`}>{execution.status}</span>
+              </Link>
+            ) : (
+              <StartExecutionPanel runId={run.id} />
+            )}
+          </section>
+        </>
       ) : (
         <section className="sectionBlock">
           <div className="sectionHeading">
