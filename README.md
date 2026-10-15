@@ -19,7 +19,7 @@ Use ChatGPT as the reasoning/orchestration layer and GitHub + Railway + browser 
 
 ## Current phase
 
-Specialist Workflows / Phase 07 — 92%.
+Production Hardened / Final — 100% application/control-plane implementation.
 
 ## Local development
 
@@ -44,6 +44,17 @@ npm run test:e2e
 
 ```env
 DATABASE_URL=postgresql://user:password@host:5432/database
+HADI_STUDIO_AUTH_REQUIRED=true
+HADI_STUDIO_OWNER=hadi
+HADI_STUDIO_PASSWORD=use-a-long-private-password
+HADI_AUTH_SECRET=use-at-least-32-random-characters
+```
+
+Optional read-only access:
+
+```env
+HADI_STUDIO_AUDITOR=auditor
+HADI_STUDIO_AUDITOR_PASSWORD=another-long-password
 ```
 
 ## Project API
@@ -120,6 +131,18 @@ GitHub Actions runs a real Chromium browser suite with Playwright against the pr
 
 HADI Dev Studio now includes a dedicated `AI Systems Agent` in addition to Telegram, Mobile, Game and VPN specialists. Internal specialist roles are executed by ChatGPT; they do not require a separate paid AI API merely to coordinate the internal workflow.
 
+## Production security
+
+Production defaults to authenticated access. HADI Dev Studio uses signed HttpOnly session cookies, owner/auditor roles, same-origin mutation protection, security headers, login rate limiting, a durable audit log and controlled recovery endpoints.
+
+Useful final endpoints:
+
+- `GET /api/auth/session`
+- `GET /api/audit`
+- `GET /api/recovery`
+- `POST /api/recovery`
+- `GET /api/system/readiness`
+
 ## Persistence
 
 PostgreSQL stores:
@@ -135,12 +158,13 @@ PostgreSQL stores:
 - QA bugs,
 - Railway deliveries,
 - Railway variable synchronization records,
-- Railway log evidence.
+- Railway log evidence,
+- audit events.
 
-Reference migrations are stored in `db/001_projects.sql`, `db/002_agent_runs.sql`, `db/003_github_execution.sql`, `db/004_qa_browser.sql`, and `db/005_railway_delivery.sql`.
+Reference migrations are stored in `db/001_projects.sql` through `db/006_production_hardening.sql`.
 
 ## Railway account state
 
-Phase 07 specialist workflow code is complete, but live AJENT provisioning is externally blocked because the connected Railway account currently returns: `Your trial has expired. Please select a plan to continue using Railway.`
+v1.0.0 application/control-plane implementation is complete, but live AJENT provisioning is externally blocked because the connected Railway account currently returns: `Your trial has expired. Please select a plan to continue using Railway.`
 
 No live Railway deployment is claimed until Railway confirms successful provisioning and health.
