@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { getDatabase } from "./database";
 import { ensureProjectSchema, getProject } from "./db";
+import { parseJsonColumn, parseNullableJsonColumn } from "./json-column";
 import {
   buildFinalReport,
   buildStagePlan,
@@ -92,9 +93,9 @@ function normalizeRun(row: AgentRunRow): AgentRunRecord {
     projectId: row.project_id,
     status: row.status,
     currentStage: row.current_stage,
-    participants: row.participants,
-    stagePlan: row.stage_plan,
-    finalReport: row.final_report,
+    participants: parseJsonColumn<AgentRunRecord["participants"]>(row.participants),
+    stagePlan: parseJsonColumn<AgentStagePlan>(row.stage_plan),
+    finalReport: parseNullableJsonColumn<FinalReport>(row.final_report),
     createdAt: new Date(row.created_at).toISOString(),
     updatedAt: new Date(row.updated_at).toISOString(),
     completedAt: row.completed_at ? new Date(row.completed_at).toISOString() : null,
@@ -102,10 +103,12 @@ function normalizeRun(row: AgentRunRow): AgentRunRecord {
 }
 
 function normalizeOutput(row: AgentOutputRow): AgentOutputRecord {
+  const payload = parseJsonColumn<AgentOutputInput>(row.payload);
+
   return {
     id: row.id,
     runId: row.run_id,
-    ...row.payload,
+    ...payload,
     agent: row.agent_key,
     stage: row.stage,
     createdAt: new Date(row.created_at).toISOString(),
