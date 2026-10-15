@@ -1,6 +1,8 @@
 import { z } from "zod";
 import type { GitHubExecutionRecord } from "./execution";
 import type { QARunRecord } from "./qa";
+import type { ProjectRecord } from "./projects";
+import { getSpecialistVariableNames } from "./specialist-workflows";
 
 export const RAILWAY_DELIVERY_STATUSES = [
   "planned",
@@ -110,9 +112,20 @@ export const railwayLogSchema = z.object({
 
 export const REQUIRED_RAILWAY_VARIABLES = ["DATABASE_URL"] as const;
 
+export function getRailwayRequiredVariables(
+  project?: Pick<ProjectRecord, "type" | "brief">,
+) {
+  const specialist = project
+    ? getSpecialistVariableNames(project.type, project.brief).required
+    : [];
+
+  return [...new Set<string>([...REQUIRED_RAILWAY_VARIABLES, ...specialist])];
+}
+
 export function getRailwayDeliveryGate(
   delivery: RailwayDeliveryRecord,
   variables: RailwayVariableRecord[],
+  requiredVariableNames: string[] = [...REQUIRED_RAILWAY_VARIABLES],
 ) {
   const syncedVariables = new Set(
     variables
@@ -120,7 +133,7 @@ export function getRailwayDeliveryGate(
       .map((item) => item.name),
   );
 
-  const missingVariables = REQUIRED_RAILWAY_VARIABLES.filter(
+  const missingVariables = requiredVariableNames.filter(
     (name) => !syncedVariables.has(name),
   );
 
@@ -150,6 +163,7 @@ export function buildRailwayDeliveryPlan(
   delivery: RailwayDeliveryRecord,
   qaRun: QARunRecord,
   execution: GitHubExecutionRecord,
+  project: Pick<ProjectRecord, "type" | "brief">,
 ) {
   return {
     repository: delivery.repository,
@@ -165,7 +179,7 @@ export function buildRailwayDeliveryPlan(
       restartPolicyType: "ON_FAILURE",
       restartPolicyMaxRetries: 3,
     },
-    requiredVariables: [...REQUIRED_RAILWAY_VARIABLES],
+    requiredVariables: getRailwayRequiredVariables(project),
     requiresPublicDomain: true,
   };
 }
@@ -174,6 +188,7 @@ export function buildRailwayToolInstructions(
   delivery: RailwayDeliveryRecord,
   qaRun: QARunRecord,
   execution: GitHubExecutionRecord,
+  project: Pick<ProjectRecord, "type" | "brief">,
 ) {
   return {
     repository: delivery.repository,
@@ -185,12 +200,13 @@ export function buildRailwayToolInstructions(
       deploymentId: delivery.deploymentId,
       domain: delivery.domain,
     },
+    requiredVariables: getRailwayRequiredVariables(project),
     sequence: [
       "Verify the Railway account and workspace can create resources.",
       "Create a private Railway project with PR deploys enabled when no Railway project ID is recorded.",
       "Create the application service from the confirmed GitHub repository and branch.",
       "Configure RAILPACK, build/start commands, /api/health, and ON_FAILURE restart policy.",
-      "Set required variables without exposing secret values; DATABASE_URL should reference the attached database or a secure external Postgres URL.",
+      "Set every required variable name from the delivery plan without exposing secret values; DATABASE_URL should reference the attached database or a secure external Postgres URL.",
       "Generate a Railway service domain for the application.",
       "Poll environment status and recent deployments until the service settles.",
       "Read build/deploy logs when a deployment fails or crashes and route failures back into implementation.",
