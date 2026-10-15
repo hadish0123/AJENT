@@ -21,14 +21,14 @@ export default function HomePage() {
           </span>
         </a>
         <div className="topActions">
-          <span className="statusPill"><i /> SYSTEM FOUNDATION</span>
+          <span className="statusPill"><i /> PROJECT INTAKE ONLINE</span>
           <a className="ghostButton" href="/projects">Private Workspace</a>
         </div>
       </header>
 
       <section className="hero">
         <div className="heroCopy">
-          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 01</span>
+          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 02</span>
           <h1>Build serious software with a private agent team.</h1>
           <p>
             ChatGPT is the brain. GitHub is the source of truth. Railway is the deployment layer.
@@ -42,7 +42,7 @@ export default function HomePage() {
 
         <aside className="progressCard">
           <div className="progressHeader">
-            <span>AJENT Foundation</span>
+            <span>AJENT / HADI Dev Studio</span>
             <strong>20%</strong>
           </div>
           <div className="progressTrack"><div className="progressValue progress20" /></div>
@@ -52,7 +52,7 @@ export default function HomePage() {
             <li className="done">Agent registry online</li>
             <li className="done">Project persistence</li>
             <li className="done">Project intake + task graph</li>
-            <li>Railway production deployment</li>
+            <li>Agent orchestration engine</li>
           </ul>
         </aside>
       </section>
