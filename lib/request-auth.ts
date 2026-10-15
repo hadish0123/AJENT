@@ -1,4 +1,3 @@
-import type { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { hasPermission, type StudioPermission } from "./permissions";
 import {
   SESSION_COOKIE,
