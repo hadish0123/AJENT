@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getQARunBundle } from "@/lib/qa-db";
+import { getRailwayDeliveryByQaRun } from "@/lib/railway-delivery-db";
+import type { RailwayDeliveryRecord } from "@/lib/railway-delivery";
+import StartDeliveryPanel from "./start-delivery-panel";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +20,13 @@ export default async function QARunPage({ params }: { params: Promise<{ id: stri
   if (!bundle) notFound();
 
   const { run, execution, checks, bugs, gate, browser } = bundle;
+
+  let delivery: RailwayDeliveryRecord | null = null;
+  try {
+    delivery = await getRailwayDeliveryByQaRun(run.id);
+  } catch {
+    delivery = null;
+  }
 
   return (
     <main className="workspacePage">
@@ -118,6 +128,31 @@ export default async function QARunPage({ params }: { params: Promise<{ id: stri
             Blocked: {gate.blockedChecks.join(", ") || "none"} · Bugs: {gate.unresolvedBugs}
           </p>
         </div>
+      </section>
+
+      <section className="sectionBlock">
+        <div className="sectionHeading">
+          <div><span className="eyebrow">RAILWAY DELIVERY</span><h2>Move validated code to production.</h2></div>
+          <span className="muted">ChatGPT → Railway → Health → Live browser</span>
+        </div>
+
+        {delivery ? (
+          <Link className="executionLinkCard" href={`/deliveries/${delivery.id}`}>
+            <div>
+              <span className="rowType">{delivery.repository}</span>
+              <h3>{delivery.domain ?? "Railway delivery prepared"}</h3>
+              <p>{delivery.status} · health {delivery.healthState}</p>
+            </div>
+            <span className={`statusTag status-${delivery.status}`}>{delivery.status}</span>
+          </Link>
+        ) : gate.ready ? (
+          <StartDeliveryPanel qaRunId={run.id} defaultRepository={execution.repository} />
+        ) : (
+          <div className="emptyState compactEmpty">
+            <h3>Railway delivery waits for the QA gate.</h3>
+            <p>All required checks must pass and all bugs must be resolved before production delivery is prepared.</p>
+          </div>
+        )}
       </section>
 
       <section className="sectionBlock">

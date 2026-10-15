@@ -682,3 +682,67 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Phase 06 — Railway delivery */
+.progressValue.progress80 { width: 80%; }
+
+.deliveryLauncher {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.deliveryLogList {
+  display: grid;
+  gap: 9px;
+}
+
+.deliveryLogRow {
+  display: grid;
+  grid-template-columns: 80px 90px minmax(0,1fr);
+  align-items: start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 13px 15px;
+  background: rgba(13,28,42,.52);
+}
+
+.deliveryLogRow p {
+  margin: 0;
+  color: #b8cdd9;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.deliverySeverity {
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.deliveryError {
+  color: #ffb5b5 !important;
+}
+
+.status-provisioning,
+.status-configured,
+.status-deploying,
+.status-synced {
+  color: var(--cyan);
+  border-color: rgba(56,217,255,.25);
+}
+
+.status-healthy,
+.status-sealed {
+  color: var(--green);
+  border-color: rgba(101,244,191,.24);
+}
+
+@media (max-width: 760px) {
+  .deliveryLogRow {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,7 +2,7 @@
 
 ## Completion
 
-65%
+80%
 
 ## Completed
 
@@ -11,28 +11,33 @@
 - 15-role specialist agent registry with project-specific routing.
 - Four-stage Agent Council orchestration with structured outputs and Lead Builder aggregation.
 - GitHub execution engine with branch/change/commit/PR tracking and merge gates.
-- Durable QA run, QA check and bug persistence.
-- QA API surface for creating runs, recording checks, recording bugs and updating fixes.
-- Vitest unit-test pipeline.
-- Production build verification.
-- Playwright Chromium smoke tests against the built Next.js application.
-- Browser smoke coverage for homepage, project intake navigation and health endpoint.
-- Playwright screenshots/traces on failures and HTML report artifact upload.
-- PRIME Browser Operator verified ready and integrated as the live public-HTTPS browser validation mode.
-- Bug loop that returns failed work to building/coding until bugs are fixed and verified.
-- QA gate that requires all required checks passed and zero unresolved bugs.
-- QA dashboard linked from GitHub executions.
+- QA engine with Vitest, production build checks, Playwright Chromium smoke tests and bug loop.
+- Durable Railway delivery persistence linked to QA-approved builds.
+- Railway project/environment/service/deployment ID synchronization model.
+- GitHub repository + branch delivery plan and connected Railway tool handoff.
+- RAILPACK build configuration, npm build/start commands, /api/health and ON_FAILURE restart policy.
+- Environment-variable synchronization that stores names/status only and never plaintext secret values.
+- DATABASE_URL requirement for production readiness.
+- Public Railway domain synchronization.
+- Relevant build/deploy/runtime log evidence persistence.
+- Railway health state and production delivery gate.
+- QA-to-Railway control-plane UI and delivery dashboard.
+- Railway delivery APIs and reference migration.
+- Phase 06 Railway delivery protocol documentation.
 
-## Deployment blocker
+## External Railway blocker
 
-Railway project creation remains blocked because the connected Railway account reports that its trial has expired and requires an active plan.
+A live AJENT Railway project was attempted through the connected Railway account during Phase 06. Railway rejected project creation with:
 
-Live Browser Operator validation of AJENT itself also needs a public HTTPS deployment URL. Until Railway is available, Playwright runs the real browser smoke suite locally inside GitHub Actions.
+> Your trial has expired. Please select a plan to continue using Railway.
 
-## Next — Phase 06
+The Phase 06 application/control-plane implementation is complete. Actual AJENT service provisioning, Railway domain generation and live Browser Operator validation cannot be truthfully claimed until the Railway account can create resources.
 
-1. Railway project/service provisioning.
-2. PostgreSQL attachment and environment-variable synchronization.
-3. GitHub-to-Railway deployment flow.
-4. Deployment status and log ingestion.
-5. Health checks, domains and redeploy/recovery controls.
+## Next — Phase 07
+
+1. Telegram bot specialist execution workflow.
+2. VPN/subscription panel workflow.
+3. Mobile application workflow.
+4. Game-development workflow.
+5. AI-system workflow.
+6. Project-type-specific build/QA/deployment policies.
