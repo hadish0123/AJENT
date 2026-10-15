@@ -1,10 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { getDatabase } from "./database";
+import { getProject } from "./db";
 import { getQARunBundle, ensureQASchema } from "./qa-db";
 import {
   buildRailwayDeliveryPlan,
   buildRailwayToolInstructions,
   getRailwayDeliveryGate,
+  getRailwayRequiredVariables,
   type RailwayDeliveryRecord,
   type RailwayDeliveryStatus,
   type RailwayHealthState,
@@ -383,19 +385,25 @@ export async function getRailwayDeliveryBundle(id: string) {
   const qaBundle = await getQARunBundle(delivery.qaRunId);
   if (!qaBundle) return null;
 
-  const [variables, logs] = await Promise.all([
+  const [variables, logs, project] = await Promise.all([
     listRailwayVariables(id),
     listRailwayLogs(id),
+    getProject(delivery.projectId),
   ]);
+
+  if (!project) return null;
+
+  const requiredVariables = getRailwayRequiredVariables(project);
 
   return {
     delivery,
     qaRun: qaBundle.run,
     execution: qaBundle.execution,
+    project,
     variables,
     logs,
-    gate: getRailwayDeliveryGate(delivery, variables),
-    plan: buildRailwayDeliveryPlan(delivery, qaBundle.run, qaBundle.execution),
-    railway: buildRailwayToolInstructions(delivery, qaBundle.run, qaBundle.execution),
+    gate: getRailwayDeliveryGate(delivery, variables, requiredVariables),
+    plan: buildRailwayDeliveryPlan(delivery, qaBundle.run, qaBundle.execution, project),
+    railway: buildRailwayToolInstructions(delivery, qaBundle.run, qaBundle.execution, project),
   };
 }
