@@ -21,14 +21,14 @@ export default function HomePage() {
           </span>
         </a>
         <div className="topActions">
-          <span className="statusPill"><i /> GITHUB EXECUTION ONLINE</span>
+          <span className="statusPill"><i /> QA + BROWSER ONLINE</span>
           <a className="ghostButton" href="/projects">Private Workspace</a>
         </div>
       </header>
 
       <section className="hero">
         <div className="heroCopy">
-          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 04</span>
+          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 05</span>
           <h1>Build serious software with a private agent team.</h1>
           <p>
             ChatGPT is the brain. GitHub is the source of truth. Railway is the deployment layer.
@@ -43,16 +43,17 @@ export default function HomePage() {
         <aside className="progressCard">
           <div className="progressHeader">
             <span>AJENT / HADI Dev Studio</span>
-            <strong>50%</strong>
+            <strong>65%</strong>
           </div>
-          <div className="progressTrack"><div className="progressValue progress50" /></div>
+          <div className="progressTrack"><div className="progressValue progress65" /></div>
           <ul className="checkList">
             <li className="done">Project intake + persistence</li>
             <li className="done">Agent council orchestration</li>
-            <li className="done">Lead Builder final report</li>
-            <li className="done">GitHub branch + change tracking</li>
-            <li className="done">PR lifecycle + merge gates</li>
-            <li>QA + browser testing</li>
+            <li className="done">GitHub execution engine</li>
+            <li className="done">Unit + build validation</li>
+            <li className="done">Playwright browser smoke tests</li>
+            <li className="done">QA gate + bug loop</li>
+            <li>Railway delivery automation</li>
           </ul>
         </aside>
       </section>
@@ -109,7 +110,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="flow">
-          {["Intake", "Council", "GitHub", "Build", "Review", "Test", "Deploy"].map((item, index) => (
+          {["Intake", "Council", "GitHub", "Build", "QA", "Browser", "Deploy"].map((item, index) => (
             <div className="flowItem" key={item}>
               <span>{index + 1}</span>
               <strong>{item}</strong>
