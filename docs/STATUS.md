@@ -2,42 +2,46 @@
 
 ## Completion
 
-80%
+92%
 
 ## Completed
 
 - Private HADI Dev Studio plugin and GitHub foundation.
 - Project intake, validation, lifecycle model and PostgreSQL persistence.
-- 15-role specialist agent registry with project-specific routing.
-- Four-stage Agent Council orchestration with structured outputs and Lead Builder aggregation.
+- Agent Council orchestration with structured specialist roles and Lead Builder aggregation.
 - GitHub execution engine with branch/change/commit/PR tracking and merge gates.
 - QA engine with Vitest, production build checks, Playwright Chromium smoke tests and bug loop.
-- Durable Railway delivery persistence linked to QA-approved builds.
-- Railway project/environment/service/deployment ID synchronization model.
-- GitHub repository + branch delivery plan and connected Railway tool handoff.
-- RAILPACK build configuration, npm build/start commands, /api/health and ON_FAILURE restart policy.
-- Environment-variable synchronization that stores names/status only and never plaintext secret values.
-- DATABASE_URL requirement for production readiness.
-- Public Railway domain synchronization.
-- Relevant build/deploy/runtime log evidence persistence.
-- Railway health state and production delivery gate.
-- QA-to-Railway control-plane UI and delivery dashboard.
-- Railway delivery APIs and reference migration.
-- Phase 06 Railway delivery protocol documentation.
+- Railway delivery control plane with environment/deployment/health synchronization.
+- Dedicated AI Systems Agent added to the internal role registry.
+- Telegram specialist workflow for commands, callbacks, conversation state, update idempotency and bot secret handling.
+- VPN/subscription workflow for provider adapters, plans, orders, trials, renewals, quota/expiry sync and idempotent provisioning.
+- Mobile workflow for navigation, platform permissions, offline/error behavior, signing safety and reproducible builds.
+- Game workflow for gameplay loop, state/save versioning, playable smoke paths and performance budgets.
+- AI workflow for model boundaries, prompts, structured outputs, tools, retrieval, evaluation and usage/fallback controls.
+- Composite specialist routing for projects such as Telegram VPN sales bots and AI-enabled Telegram/admin/mobile systems.
+- Specialist scope detection from both project type and client brief.
+- Specialist production policies injected directly into Agent Council prompts.
+- Specialist checks appended to GitHub execution plans.
+- Specialist checks appended to QA run requirements.
+- Specialist environment-variable name policy without storing secret values.
+- Specialist routing visible on project and execution dashboards.
+- Specialist Control Center and project specialist API.
+- Unit tests covering Telegram/VPN/AI/mobile/game routing and gate generation.
 
 ## External Railway blocker
 
-A live AJENT Railway project was attempted through the connected Railway account during Phase 06. Railway rejected project creation with:
+The connected Railway account is authenticated, but live AJENT project creation remains blocked by Railway with:
 
 > Your trial has expired. Please select a plan to continue using Railway.
 
-The Phase 06 application/control-plane implementation is complete. Actual AJENT service provisioning, Railway domain generation and live Browser Operator validation cannot be truthfully claimed until the Railway account can create resources.
+This does not block GitHub development, Agent Council execution, specialist routing or CI. It only prevents truthfully claiming a live AJENT Railway service/domain until the account can provision resources.
 
-## Next — Phase 07
+## Next — Phase 08
 
-1. Telegram bot specialist execution workflow.
-2. VPN/subscription panel workflow.
-3. Mobile application workflow.
-4. Game-development workflow.
-5. AI-system workflow.
-6. Project-type-specific build/QA/deployment policies.
+1. Authentication and session protection for the private control plane.
+2. Role/permission boundaries for sensitive actions.
+3. Durable audit log for mutations and tool handoffs.
+4. Recovery and failure-state controls.
+5. Security hardening and abuse controls.
+6. End-to-end acceptance test covering intake → council → GitHub → QA → delivery.
+7. Final operational documentation and production-readiness checklist.

@@ -47,7 +47,7 @@ export async function POST(request: Request) {
       deadline: input.deadline,
       status: "intake",
       requirements: buildInitialRequirements(input),
-      taskGraph: buildTaskGraph(input.type),
+      taskGraph: buildTaskGraph(input.type, input.brief),
       createdAt: now,
       updatedAt: now,
     };

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { AGENTS, getAgentsForProject, type AgentKey } from "./agents";
 import type { ProjectRecord } from "./projects";
+import { buildSpecialistPromptContext } from "./specialist-workflows";
 
 export const RUN_STAGES = ["analysis", "debate", "review", "lead"] as const;
 export type RunStage = (typeof RUN_STAGES)[number];
@@ -23,6 +24,7 @@ const AGENT_KEYS = [
   "mobile",
   "game",
   "vpn",
+  "ai",
   "security",
   "qa",
   "devops",
@@ -100,6 +102,7 @@ const builderAgents: AgentKey[] = [
   "mobile",
   "game",
   "vpn",
+  "ai",
 ];
 
 function unique<T>(items: T[]): T[] {
@@ -107,7 +110,7 @@ function unique<T>(items: T[]): T[] {
 }
 
 export function buildStagePlan(project: ProjectRecord): AgentStagePlan {
-  const available = new Set(getAgentsForProject(project.type).map((agent) => agent.key));
+  const available = new Set(getAgentsForProject(project.type, project.brief).map((agent) => agent.key));
   const pick = (keys: AgentKey[]) => keys.filter((key) => available.has(key));
 
   return {
@@ -209,6 +212,9 @@ export function buildAgentPrompt(
     "",
     "STAGE INSTRUCTION",
     stageInstructions[stage],
+    "",
+    "SPECIALIST PRODUCTION WORKFLOWS",
+    buildSpecialistPromptContext(project.type, project.brief),
     "",
     "PRIOR COUNCIL OUTPUTS",
     priorContext(outputs),

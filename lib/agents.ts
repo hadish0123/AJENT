@@ -1,4 +1,5 @@
 import type { ProjectType } from "./project-types";
+import { hasAiScope, hasVpnScope } from "./scope-hints";
 
 export type AgentKey =
   | "requirements"
@@ -12,6 +13,7 @@ export type AgentKey =
   | "mobile"
   | "game"
   | "vpn"
+  | "ai"
   | "security"
   | "qa"
   | "devops"
@@ -35,13 +37,20 @@ export const AGENTS: AgentDefinition[] = [
   { key: "telegram", name: "Telegram Bot Agent", mission: "Build Telegram flows, commands, callbacks, payments and bot architecture.", projectTypes: ["telegram-bot"] },
   { key: "mobile", name: "Mobile Agent", mission: "Own mobile architecture, navigation and platform delivery.", projectTypes: ["mobile-app"] },
   { key: "game", name: "Game Agent", mission: "Own gameplay architecture, loops, state and performance.", projectTypes: ["game"] },
-  { key: "vpn", name: "VPN Panel Agent", mission: "Own subscriptions, provisioning and supported panel integrations.", projectTypes: ["vpn-panel", "telegram-bot", "admin-panel"] },
+  { key: "vpn", name: "VPN Panel Agent", mission: "Own subscriptions, provisioning and supported panel integrations.", projectTypes: ["vpn-panel"] },
+  { key: "ai", name: "AI Systems Agent", mission: "Own model boundaries, prompts, structured outputs, tools, retrieval and evaluation.", projectTypes: ["ai-system"] },
   { key: "security", name: "Security Agent", mission: "Review auth, secrets, permissions, input validation and abuse resistance.", projectTypes: ["all"] },
   { key: "qa", name: "QA Agent", mission: "Test builds, flows, regressions and deployment readiness.", projectTypes: ["all"] },
   { key: "devops", name: "DevOps Agent", mission: "Own Railway config, environments, health checks and deployments.", projectTypes: ["all"] },
   { key: "lead", name: "Lead Builder", mission: "Resolve disagreements, integrate work and own final readiness.", projectTypes: ["all"] },
 ];
 
-export function getAgentsForProject(type: ProjectType) {
-  return AGENTS.filter((agent) => agent.projectTypes[0] === "all" || (agent.projectTypes as ProjectType[]).includes(type));
+export function getAgentsForProject(type: ProjectType, brief = "") {
+  return AGENTS.filter((agent) => {
+    if (agent.projectTypes[0] === "all") return true;
+    if ((agent.projectTypes as ProjectType[]).includes(type)) return true;
+    if (agent.key === "vpn" && hasVpnScope(type, brief)) return true;
+    if (agent.key === "ai" && hasAiScope(type, brief)) return true;
+    return false;
+  });
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   getRailwayDeliveryGate,
+  getRailwayRequiredVariables,
   type RailwayDeliveryRecord,
   type RailwayVariableRecord,
 } from "../../lib/railway-delivery";
@@ -71,5 +72,21 @@ describe("Railway delivery gate", () => {
 
     expect(gate.ready).toBe(false);
     expect(gate.healthReady).toBe(false);
+  });
+
+  it("adds specialist secrets to the Railway requirement list", () => {
+    const required = getRailwayRequiredVariables({
+      type: "telegram-bot",
+      brief: "Sell VPN subscriptions with Sanaei provisioning.",
+    });
+
+    expect(required).toEqual(
+      expect.arrayContaining([
+        "DATABASE_URL",
+        "TELEGRAM_BOT_TOKEN",
+        "VPN_PANEL_BASE_URL",
+        "VPN_PANEL_API_TOKEN",
+      ]),
+    );
   });
 });

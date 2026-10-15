@@ -81,14 +81,15 @@ const taskTitle: Record<AgentKey, string> = {
   mobile: "Implement mobile application",
   game: "Implement gameplay systems",
   vpn: "Implement VPN panel integration",
+  ai: "Implement AI system logic",
   security: "Run security review",
   qa: "Run QA and acceptance tests",
   devops: "Prepare deployment",
   lead: "Integrate and approve final build",
 };
 
-export function buildTaskGraph(type: ProjectType): ProjectTask[] {
-  const agents = getAgentsForProject(type);
+export function buildTaskGraph(type: ProjectType, brief = ""): ProjectTask[] {
+  const agents = getAgentsForProject(type, brief);
   const tasks: ProjectTask[] = [];
   let previousCore: string[] = [];
 
@@ -97,8 +98,7 @@ export function buildTaskGraph(type: ProjectType): ProjectTask[] {
 
     let dependsOn = previousCore;
 
-    if (agent.key === "frontend" || agent.key === "backend" || agent.key === "database" ||
-        agent.key === "telegram" || agent.key === "mobile" || agent.key === "game" || agent.key === "vpn") {
+    if (["frontend", "backend", "database", "telegram", "mobile", "game", "vpn", "ai"].includes(agent.key)) {
       dependsOn = tasks
         .filter((task) => ["architect", "uiux"].includes(task.agent))
         .map((task) => task.id);
@@ -106,7 +106,7 @@ export function buildTaskGraph(type: ProjectType): ProjectTask[] {
 
     if (agent.key === "security" || agent.key === "qa") {
       dependsOn = tasks
-        .filter((task) => ["frontend", "backend", "database", "telegram", "mobile", "game", "vpn"].includes(task.agent))
+        .filter((task) => ["frontend", "backend", "database", "telegram", "mobile", "game", "vpn", "ai"].includes(task.agent))
         .map((task) => task.id);
     }
 

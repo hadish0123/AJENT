@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { AgentRunRecord, FinalReport } from "./orchestration";
 import type { ProjectRecord } from "./projects";
+import { getSpecialistExecutionChecks } from "./specialist-workflows";
 
 export const EXECUTION_STATUSES = [
   "planned",
@@ -155,7 +156,7 @@ export function buildExecutionPlan(
   return {
     summary: `Execute the approved ${project.type} plan from council run ${run.id} on GitHub.`,
     items,
-    requiredChecks: ["typecheck", "build", "review"],
+    requiredChecks: unique(["typecheck", "build", "review", ...getSpecialistExecutionChecks(project.type, project.brief)]),
   };
 }
 

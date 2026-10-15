@@ -79,11 +79,21 @@
 
 ## Phase 07 — Specialist workflows — 92%
 
-- Telegram
-- VPN panel
-- Mobile
-- Game
-- AI systems
+- [x] Telegram bot workflow
+- [x] VPN/subscription workflow
+- [x] Mobile application workflow
+- [x] Game-development workflow
+- [x] AI-system workflow
+- [x] Composite routing for Telegram + VPN and Telegram + AI scopes
+- [x] Dedicated AI Systems Agent
+- [x] Specialist policy injection into Agent Council prompts
+- [x] Specialist task-graph routing from project brief
+- [x] Specialist GitHub execution gates
+- [x] Specialist QA gates
+- [x] Specialist environment-variable name planning
+- [x] Specialist project dashboard
+- [x] Specialist control-center page and API
+- [x] Unit tests for specialist routing and gates
 
 ## Phase 08 — Production hardening — 100%
 

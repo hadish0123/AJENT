@@ -19,7 +19,7 @@ Use ChatGPT as the reasoning/orchestration layer and GitHub + Railway + browser 
 
 ## Current phase
 
-Railway Delivery / Phase 06 — 80%.
+Specialist Workflows / Phase 07 — 92%.
 
 ## Local development
 
@@ -78,6 +78,14 @@ DATABASE_URL=postgresql://user:password@host:5432/database
 - `POST /api/qa/:id/bugs`
 - `PATCH /api/bugs/:id`
 
+## Specialist Workflow API
+
+- `GET /api/projects/:id/specialists`
+
+Specialist policies activate automatically for Telegram, VPN/subscription, mobile, game and AI projects. Composite routing is supported, so a Telegram VPN sales bot activates both Telegram and VPN workflows, while an AI-enabled Telegram bot activates Telegram + AI.
+
+Specialist routing affects Agent Council prompts, task graphs, GitHub execution checks, QA checks, environment-variable name planning and release gates.
+
 ## Railway Delivery API
 
 - `GET /api/qa/:id/delivery`
@@ -108,6 +116,10 @@ HADI Dev Studio stores Railway IDs, variable names/status, domain, health and se
 
 GitHub Actions runs a real Chromium browser suite with Playwright against the production build. For deployed public HTTPS targets, ChatGPT can also use the connected PRIME Browser Operator for isolated live browser validation and screenshot-backed bug reporting.
 
+## Specialist agents
+
+HADI Dev Studio now includes a dedicated `AI Systems Agent` in addition to Telegram, Mobile, Game and VPN specialists. Internal specialist roles are executed by ChatGPT; they do not require a separate paid AI API merely to coordinate the internal workflow.
+
 ## Persistence
 
 PostgreSQL stores:
@@ -129,6 +141,6 @@ Reference migrations are stored in `db/001_projects.sql`, `db/002_agent_runs.sql
 
 ## Railway account state
 
-Phase 06 control-plane code is complete, but live AJENT provisioning is externally blocked because the connected Railway account currently returns: `Your trial has expired. Please select a plan to continue using Railway.`
+Phase 07 specialist workflow code is complete, but live AJENT provisioning is externally blocked because the connected Railway account currently returns: `Your trial has expired. Please select a plan to continue using Railway.`
 
 No live Railway deployment is claimed until Railway confirms successful provisioning and health.
