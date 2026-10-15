@@ -19,6 +19,7 @@ jobs:
       HADI_STUDIO_OWNER: hadi
       HADI_STUDIO_PASSWORD: ci-owner-password
       HADI_AUTH_SECRET: ci-auth-secret-0123456789-abcdefghijklmnopqrstuvwxyz
+      HADI_COOKIE_SECURE: "false"
     services:
       postgres:
         image: postgres:16
