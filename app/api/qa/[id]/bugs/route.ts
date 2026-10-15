@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { bugCreateSchema } from "@/lib/qa";
 import { createQABug } from "@/lib/qa-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,7 @@ export async function POST(request: Request, context: Context) {
     }
 
     const bug = await createQABug(id, parsed.data);
+    await auditMutation(request, { action: "qa.bug.create", resourceType: "qa", resourceId: id, metadata: { bugId: bug.id, severity: bug.severity } });
     return NextResponse.json({ bug }, { status: 201 });
   } catch (error) {
     return NextResponse.json(

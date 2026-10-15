@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { executionSyncSchema } from "@/lib/execution";
 import { getExecutionBundle, syncExecution } from "@/lib/execution-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -38,6 +39,7 @@ export async function PATCH(request: Request, context: Context) {
     }
 
     const execution = await syncExecution(id, parsed.data);
+    await auditMutation(request, { action: "execution.sync", resourceType: "execution", resourceId: execution.id, metadata: { status: execution.status, prNumber: execution.prNumber } });
     return NextResponse.json({ execution });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to update execution.";

@@ -4,6 +4,7 @@ import {
   createRailwayDelivery,
   getRailwayDeliveryByQaRun,
 } from "@/lib/railway-delivery-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -41,6 +42,7 @@ export async function POST(request: Request, context: Context) {
       parsed.data.branch,
     );
 
+    await auditMutation(request, { action: "delivery.create", resourceType: "delivery", resourceId: delivery.id, metadata: { qaRunId: id, repository: delivery.repository } });
     return NextResponse.json({ delivery }, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to create Railway delivery.";

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { bugUpdateSchema } from "@/lib/qa";
 import { updateQABug } from "@/lib/qa-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -25,6 +26,7 @@ export async function PATCH(request: Request, context: Context) {
       return NextResponse.json({ error: "Bug not found." }, { status: 404 });
     }
 
+    await auditMutation(request, { action: "qa.bug.update", resourceType: "bug", resourceId: bug.id, metadata: { status: bug.status, fixedCommitSha: bug.fixedCommitSha } });
     return NextResponse.json({ bug });
   } catch (error) {
     return NextResponse.json(

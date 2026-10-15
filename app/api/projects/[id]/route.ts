@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getProject, updateProject } from "@/lib/db";
 import { updateProjectSchema } from "@/lib/projects";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -43,6 +44,7 @@ export async function PATCH(request: Request, context: Context) {
       return NextResponse.json({ error: "Project not found." }, { status: 404 });
     }
 
+    await auditMutation(request, { action: "project.update", resourceType: "project", resourceId: project.id, metadata: { status: project.status } });
     return NextResponse.json({ project });
   } catch (error) {
     return NextResponse.json(

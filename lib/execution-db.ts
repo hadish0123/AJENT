@@ -3,6 +3,7 @@ import { getDatabase } from "./database";
 import { getAgentRun } from "./agent-runs-db";
 import { ensureAgentRunSchema } from "./agent-runs-db";
 import { getProject } from "./db";
+import { parseJsonColumn } from "./json-column";
 import {
   buildExecutionPlan,
   buildGitHubToolInstructions,
@@ -125,7 +126,7 @@ function normalizeExecution(row: ExecutionRow): GitHubExecutionRecord {
     baseBranch: row.base_branch,
     workingBranch: row.working_branch,
     status: row.status,
-    plan: row.plan,
+    plan: parseJsonColumn<ExecutionPlan>(row.plan),
     headSha: row.head_sha,
     prNumber: row.pr_number,
     prUrl: row.pr_url,

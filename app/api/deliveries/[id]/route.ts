@@ -4,6 +4,7 @@ import {
   getRailwayDeliveryBundle,
   syncRailwayDelivery,
 } from "@/lib/railway-delivery-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -41,6 +42,7 @@ export async function PATCH(request: Request, context: Context) {
     }
 
     const delivery = await syncRailwayDelivery(id, parsed.data);
+    await auditMutation(request, { action: "delivery.sync", resourceType: "delivery", resourceId: delivery.id, metadata: { status: delivery.status, healthState: delivery.healthState } });
     return NextResponse.json({ delivery });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to update Railway delivery.";

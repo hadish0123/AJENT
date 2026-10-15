@@ -1,5 +1,6 @@
 import { getDatabase } from "./database";
 import type { ProjectRecord } from "./projects";
+import { parseJsonColumn } from "./json-column";
 
 type ProjectRow = {
   id: string;
@@ -57,8 +58,8 @@ function normalize(row: ProjectRow): ProjectRecord {
     budget: row.budget,
     deadline: row.deadline,
     status: row.status,
-    requirements: row.requirements,
-    taskGraph: row.task_graph,
+    requirements: parseJsonColumn<ProjectRecord["requirements"]>(row.requirements),
+    taskGraph: parseJsonColumn<ProjectRecord["taskGraph"]>(row.task_graph),
     createdAt: new Date(row.created_at).toISOString(),
     updatedAt: new Date(row.updated_at).toISOString(),
   };
