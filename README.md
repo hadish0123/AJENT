@@ -19,7 +19,7 @@ Use ChatGPT as the reasoning/orchestration layer and GitHub + Railway + browser 
 
 ## Current phase
 
-QA & Browser Testing / Phase 05 — 65%.
+Railway Delivery / Phase 06 — 80%.
 
 ## Local development
 
@@ -78,13 +78,35 @@ DATABASE_URL=postgresql://user:password@host:5432/database
 - `POST /api/qa/:id/bugs`
 - `PATCH /api/bugs/:id`
 
+## Railway Delivery API
+
+- `GET /api/qa/:id/delivery`
+- `POST /api/qa/:id/delivery`
+- `GET /api/deliveries/:id`
+- `PATCH /api/deliveries/:id`
+- `POST /api/deliveries/:id/variables`
+- `POST /api/deliveries/:id/logs`
+
+## Railway delivery model
+
+A Railway delivery can only be prepared after the QA gate passes. ChatGPT then uses the connected Railway tool to provision/synchronize infrastructure.
+
+The default contract is:
+
+- RAILPACK builder,
+- `npm run build`,
+- `npm run start`,
+- `/api/health`,
+- ON_FAILURE restart policy,
+- required `DATABASE_URL`,
+- public service domain,
+- environment/deployment health monitoring.
+
+HADI Dev Studio stores Railway IDs, variable names/status, domain, health and selected non-secret log evidence. It never stores plaintext Railway secret values.
+
 ## Browser validation
 
 GitHub Actions runs a real Chromium browser suite with Playwright against the production build. For deployed public HTTPS targets, ChatGPT can also use the connected PRIME Browser Operator for isolated live browser validation and screenshot-backed bug reporting.
-
-## Bug loop
-
-Failed checks or unresolved QA bugs move work back to `building` / `coding`. A QA run passes only when every required check is green and every bug is verified or explicitly marked wont-fix.
 
 ## Persistence
 
@@ -98,10 +120,15 @@ PostgreSQL stores:
 - execution checks,
 - QA runs,
 - QA checks,
-- QA bugs.
+- QA bugs,
+- Railway deliveries,
+- Railway variable synchronization records,
+- Railway log evidence.
 
-Reference migrations are stored in `db/001_projects.sql`, `db/002_agent_runs.sql`, `db/003_github_execution.sql`, and `db/004_qa_browser.sql`.
+Reference migrations are stored in `db/001_projects.sql`, `db/002_agent_runs.sql`, `db/003_github_execution.sql`, `db/004_qa_browser.sql`, and `db/005_railway_delivery.sql`.
 
-## Delivery status
+## Railway account state
 
-GitHub foundation through Phase 05 is complete. Railway deployment remains blocked until the connected Railway account can create new projects.
+Phase 06 control-plane code is complete, but live AJENT provisioning is externally blocked because the connected Railway account currently returns: `Your trial has expired. Please select a plan to continue using Railway.`
+
+No live Railway deployment is claimed until Railway confirms successful provisioning and health.
