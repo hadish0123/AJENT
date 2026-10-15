@@ -1,5 +1,7 @@
 import type { AgentKey } from "./agents";
 import type { ProjectType } from "./project-types";
+import { hasAiScope, hasVpnScope } from "./scope-hints";
+export { hasAiScope, hasVpnScope } from "./scope-hints";
 
 export type SpecialistWorkflowKey = "telegram" | "vpn" | "mobile" | "game" | "ai";
 
@@ -17,12 +19,6 @@ export type SpecialistWorkflow = {
   releaseGates: string[];
   riskControls: string[];
 };
-
-const VPN_HINT =
-  /\b(vpn|vless|vmess|xray|wireguard|openvpn|sing-box|sanaei|pasargad|subscription)\b|فیلترشکن|کانفیگ|اشتراک\s*(vpn|وی\s*پی\s*ان)?/iu;
-
-const AI_HINT =
-  /\b(ai|llm|agent|agents|chatgpt|openai|anthropic|gemini|rag|embedding|vector)\b|هوش\s*مصنوعی|ایجنت|مدل\s*زبانی/iu;
 
 export const SPECIALIST_WORKFLOWS: Record<SpecialistWorkflowKey, SpecialistWorkflow> = {
   telegram: {
@@ -207,16 +203,6 @@ export const SPECIALIST_WORKFLOWS: Record<SpecialistWorkflowKey, SpecialistWorkf
 
 function unique<T>(items: T[]): T[] {
   return [...new Set(items)];
-}
-
-export function hasVpnScope(type: ProjectType, brief = "") {
-  return type === "vpn-panel" ||
-    (["telegram-bot", "admin-panel", "custom"].includes(type) && VPN_HINT.test(brief));
-}
-
-export function hasAiScope(type: ProjectType, brief = "") {
-  return type === "ai-system" ||
-    (["website", "telegram-bot", "admin-panel", "mobile-app", "custom"].includes(type) && AI_HINT.test(brief));
 }
 
 export function getSpecialistWorkflows(
