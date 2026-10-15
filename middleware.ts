@@ -42,6 +42,35 @@ function isStaticPath(pathname: string) {
     pathname === "/robots.txt";
 }
 
+function isAllowedMutationOrigin(request: NextRequest) {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+
+  try {
+    const originUrl = new URL(origin);
+    const forwardedHost = request.headers
+      .get("x-forwarded-host")
+      ?.split(",")[0]
+      ?.trim();
+    const host = forwardedHost || request.headers.get("host")?.trim();
+
+    if (!host || originUrl.host !== host) return false;
+
+    const forwardedProto = request.headers
+      .get("x-forwarded-proto")
+      ?.split(",")[0]
+      ?.trim();
+
+    if (forwardedProto && originUrl.protocol !== `${forwardedProto}:`) {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
@@ -49,13 +78,10 @@ export async function middleware(request: NextRequest) {
     return withSecurityHeaders(NextResponse.next());
   }
 
-  if (MUTATING_METHODS.has(request.method)) {
-    const origin = request.headers.get("origin");
-    if (origin && origin !== request.nextUrl.origin) {
-      return withSecurityHeaders(
-        NextResponse.json({ error: "Cross-origin mutation blocked." }, { status: 403 }),
-      );
-    }
+  if (MUTATING_METHODS.has(request.method) && !isAllowedMutationOrigin(request)) {
+    return withSecurityHeaders(
+      NextResponse.json({ error: "Cross-origin mutation blocked." }, { status: 403 }),
+    );
   }
 
   const setting = process.env.HADI_STUDIO_AUTH_REQUIRED;
