@@ -13,11 +13,13 @@
 
 ## Phase 02 — Project intake — 20%
 
-- Project creation form
-- Requirements schema
-- Project status model
-- Durable persistence
-- Task graph
+- [x] Project creation form
+- [x] Requirements schema
+- [x] Project status model
+- [x] Durable PostgreSQL persistence
+- [x] Automatic project-specific task graph
+- [x] Project list and detail views
+- [x] Project API: create, list, read, update
 
 ## Phase 03 — Agent orchestration — 35%
 
