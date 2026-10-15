@@ -9,7 +9,7 @@
 - [x] Project type registry
 - [x] Health endpoint
 - [x] Architecture + project memory docs
-- [ ] Railway deployment (blocked until Railway account can create projects)
+- [ ] Live Railway project provisioning for AJENT (externally blocked by Railway account plan)
 
 ## Phase 02 — Project intake — 20%
 
@@ -63,11 +63,19 @@
 
 ## Phase 06 — Railway delivery — 80%
 
-- Environment management
-- Variables
-- Deployment
-- Logs
-- Health monitoring
+- [x] Durable Railway delivery model
+- [x] Railway project/environment/service/deployment ID synchronization
+- [x] GitHub-to-Railway delivery plan
+- [x] RAILPACK build/start/health/restart configuration contract
+- [x] Environment variable name synchronization without secret storage
+- [x] DATABASE_URL delivery requirement
+- [x] Public domain synchronization
+- [x] Build/deploy/runtime log evidence
+- [x] Health monitoring state
+- [x] Production delivery gate
+- [x] QA-to-Railway workflow and delivery dashboard
+- [x] Tool-facing Railway APIs and protocol
+- [ ] Live AJENT Railway project creation (account currently returns trial expired)
 
 ## Phase 07 — Specialist workflows — 92%
 
