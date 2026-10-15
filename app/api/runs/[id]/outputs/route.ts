@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { submitAgentOutput } from "@/lib/agent-runs-db";
 import { agentOutputInputSchema } from "@/lib/orchestration";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,7 @@ export async function POST(request: Request, context: Context) {
     }
 
     const bundle = await submitAgentOutput(id, parsed.data);
+    await auditMutation(request, { action: "agent_output.submit", resourceType: "agent_run", resourceId: id, metadata: { agent: parsed.data.agent, stage: parsed.data.stage } });
     return NextResponse.json(bundle);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to submit agent output.";
