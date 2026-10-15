@@ -19,7 +19,7 @@ Use ChatGPT as the reasoning/orchestration layer and GitHub + Railway + browser 
 
 ## Current phase
 
-Agent Orchestration / Phase 03 — 35%.
+GitHub Execution / Phase 04 — 50%.
 
 ## Local development
 
@@ -36,14 +36,6 @@ Open http://localhost:3000
 DATABASE_URL=postgresql://user:password@host:5432/database
 ```
 
-## Health check
-
-`GET /api/health`
-
-## Agent registry
-
-`GET /api/agents`
-
 ## Project API
 
 - `GET /api/projects`
@@ -58,12 +50,30 @@ DATABASE_URL=postgresql://user:password@host:5432/database
 - `GET /api/runs/:id`
 - `POST /api/runs/:id/outputs`
 
-The council runs through `analysis → debate → review → lead`. ChatGPT executes the logical roles and submits structured outputs; Phase 03 does not require a separate AI API.
+## GitHub Execution API
+
+- `GET /api/runs/:id/execution`
+- `POST /api/runs/:id/execution`
+- `GET /api/executions/:id`
+- `PATCH /api/executions/:id`
+- `POST /api/executions/:id/changes`
+- `POST /api/executions/:id/checks`
+
+GitHub mutations are executed by ChatGPT through the connected GitHub tool. The control plane stores the durable execution plan, working branch, applied changes, commit SHAs, PR metadata, required checks and merge-readiness gate.
 
 ## Persistence
 
-PostgreSQL stores projects, agent runs and structured agent outputs. Reference migrations are stored in `db/001_projects.sql` and `db/002_agent_runs.sql`.
+PostgreSQL stores:
+
+- projects,
+- agent runs,
+- agent outputs,
+- GitHub executions,
+- execution changes,
+- execution checks.
+
+Reference migrations are stored in `db/001_projects.sql`, `db/002_agent_runs.sql`, and `db/003_github_execution.sql`.
 
 ## Delivery status
 
-GitHub foundation through Phase 03 is complete. Railway deployment remains blocked until the connected Railway account can create new projects.
+GitHub foundation through Phase 04 is complete. Railway deployment remains blocked until the connected Railway account can create new projects.
