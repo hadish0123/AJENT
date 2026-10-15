@@ -4,6 +4,7 @@ import { getExecutionBundle } from "@/lib/execution-db";
 import { listExecutionQARuns } from "@/lib/qa-db";
 import type { QARunRecord } from "@/lib/qa";
 import StartQAPanel from "./start-qa-panel";
+import { getSpecialistQaChecks, getSpecialistWorkflows } from "@/lib/specialist-workflows";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +30,8 @@ export default async function ExecutionPage({ params }: { params: Promise<{ id: 
   }
 
   const canStartQA = ["review_ready", "completed"].includes(execution.status);
+  const specialistWorkflows = getSpecialistWorkflows(project.type, project.brief);
+  const qaChecks = [...new Set(["typecheck", "unit", "build", "browser-smoke", ...getSpecialistQaChecks(project.type, project.brief)])];
 
   return (
     <main className="workspacePage">
@@ -143,6 +146,14 @@ export default async function ExecutionPage({ params }: { params: Promise<{ id: 
           <span className="muted">CI + Playwright + live Browser Operator</span>
         </div>
 
+        {specialistWorkflows.length ? (
+          <div className="specialistMiniStrip">
+            {specialistWorkflows.map((workflow) => (
+              <span className="statusTag status-ready" key={workflow.key}>{workflow.label}</span>
+            ))}
+          </div>
+        ) : null}
+
         {qaRuns.length ? (
           <div className="runList">
             {qaRuns.slice(0, 5).map((qaRun) => (
@@ -158,7 +169,7 @@ export default async function ExecutionPage({ params }: { params: Promise<{ id: 
         ) : null}
 
         {canStartQA ? (
-          <StartQAPanel executionId={execution.id} />
+          <StartQAPanel executionId={execution.id} requiredChecks={qaChecks} />
         ) : (
           <div className="emptyState compactEmpty">
             <h3>QA waits for GitHub execution readiness.</h3>
