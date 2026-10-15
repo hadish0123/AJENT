@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { listProjects } from "@/lib/db";
 import { PROJECT_LABELS } from "@/lib/project-types";
+import type { ProjectRecord } from "@/lib/projects";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
-  let projects = [];
+  let projects: ProjectRecord[] = [];
   let databaseError = "";
 
   try {
