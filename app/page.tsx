@@ -21,7 +21,7 @@ export default function HomePage() {
           </span>
         </a>
         <div className="topActions">
-          <span className="statusPill"><i /> RAILWAY DELIVERY READY</span>
+          <span className="statusPill"><i /> SPECIALIST WORKFLOWS ONLINE</span>
           <a className="ghostButton" href="/projects">Private Workspace</a>
         </div>
       </header>
