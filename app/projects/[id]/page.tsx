@@ -5,6 +5,7 @@ import { listProjectRuns } from "@/lib/agent-runs-db";
 import type { AgentRunRecord } from "@/lib/orchestration";
 import { PROJECT_LABELS } from "@/lib/project-types";
 import StartRunButton from "./start-run-button";
+import { getSpecialistVariableNames, getSpecialistWorkflows } from "@/lib/specialist-workflows";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
   const completed = project.taskGraph.filter((task) => task.status === "done").length;
   const percent = Math.round((completed / Math.max(project.taskGraph.length, 1)) * 100);
+  const specialistWorkflows = getSpecialistWorkflows(project.type, project.brief);
+  const specialistVariables = getSpecialistVariableNames(project.type, project.brief);
 
   return (
     <main className="workspacePage">
@@ -54,6 +57,57 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           <span className="eyebrow">ACCEPTANCE BASELINE</span>
           <ul className="cleanList">{project.requirements.acceptanceCriteria.map((item) => <li key={item}>{item}</li>)}</ul>
         </article>
+      </section>
+
+      <section className="sectionBlock">
+        <div className="sectionHeading">
+          <div>
+            <span className="eyebrow">SPECIALIST ROUTING</span>
+            <h2>Project-specific production workflow</h2>
+          </div>
+          <Link className="textLink" href="/specialists">All specialist policies →</Link>
+        </div>
+
+        {specialistWorkflows.length ? (
+          <div className="specialistProjectGrid">
+            {specialistWorkflows.map((workflow) => (
+              <article className="specialistProjectCard" key={workflow.key}>
+                <div className="outputHeader">
+                  <div>
+                    <span className="rowType">{workflow.key}</span>
+                    <h3>{workflow.label}</h3>
+                  </div>
+                  <span className="statusTag status-ready">{workflow.leadAgent}</span>
+                </div>
+                <p>{workflow.description}</p>
+                <div className="specialistCheckRow">
+                  {workflow.executionChecks.map((check) => (
+                    <span className="statusTag" key={check}>GitHub: {check}</span>
+                  ))}
+                  {workflow.qaChecks.map((check) => (
+                    <span className="statusTag" key={check}>QA: {check}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="emptyState compactEmpty">
+            <h3>General software workflow active.</h3>
+            <p>This project uses the core architecture, frontend/backend, security, QA and DevOps policies.</p>
+          </div>
+        )}
+
+        {(specialistVariables.required.length || specialistVariables.optional.length) ? (
+          <div className="variablePolicyCard">
+            <strong>Environment variable policy</strong>
+            <p>
+              Required names: {specialistVariables.required.join(", ") || "none"} ·
+              Optional names: {specialistVariables.optional.join(", ") || "none"}
+            </p>
+            <small>Only variable names are planned here; secret values must remain outside source control.</small>
+          </div>
+        ) : null}
       </section>
 
       <section className="sectionBlock">
