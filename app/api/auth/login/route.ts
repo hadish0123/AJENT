@@ -21,6 +21,11 @@ function safeReturnTo(value: string) {
   return value;
 }
 
+function useSecureCookie() {
+  if (process.env.HADI_COOKIE_SECURE === "false") return false;
+  return process.env.NODE_ENV === "production";
+}
+
 export async function POST(request: Request) {
   const readiness = getAuthReadiness();
   if (!readiness.secretConfigured || !readiness.ownerPasswordConfigured) {
@@ -82,7 +87,7 @@ export async function POST(request: Request) {
 
   response.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: useSecureCookie(),
     sameSite: "strict",
     path: "/",
     maxAge: SESSION_TTL_SECONDS,
