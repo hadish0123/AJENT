@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getExecutionBundle } from "@/lib/execution-db";
 import { listExecutionQARuns } from "@/lib/qa-db";
+import type { QARunRecord } from "@/lib/qa";
 import StartQAPanel from "./start-qa-panel";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +21,7 @@ export default async function ExecutionPage({ params }: { params: Promise<{ id: 
 
   const { execution, project, changes, checks, mergeGate, github } = bundle;
 
-  let qaRuns = [];
+  let qaRuns: QARunRecord[] = [];
   try {
     qaRuns = await listExecutionQARuns(execution.id);
   } catch {
