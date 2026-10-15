@@ -598,3 +598,87 @@ footer {
   .executionLinkCard,
   .mergeGate { align-items: flex-start; flex-direction: column; }
 }
+
+
+/* Phase 05 — QA & browser testing */
+.progressValue.progress65 { width: 65%; }
+
+.qaLauncher {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+.qaLauncher input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: rgba(2,12,20,.66);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+}
+.qaLauncher input:focus {
+  border-color: rgba(56,217,255,.5);
+  box-shadow: 0 0 0 3px rgba(56,217,255,.08);
+}
+
+.bugGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+.bugCard {
+  border: 1px solid var(--line);
+  background: rgba(13,28,42,.58);
+  border-radius: 16px;
+  padding: 18px;
+}
+.bugCard h3 {
+  margin: 5px 0 0;
+  font-size: 16px;
+}
+.bugCard p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.bugCard small {
+  display: block;
+  color: #8ea7b8;
+  margin-top: 7px;
+}
+.bugCard code {
+  display: block;
+  margin-top: 10px;
+  color: var(--cyan);
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+
+.status-running,
+.status-fixing,
+.status-fixed {
+  color: var(--cyan);
+  border-color: rgba(56,217,255,.25);
+}
+.status-blocked,
+.status-open {
+  color: #ffd479;
+  border-color: rgba(255,212,121,.24);
+}
+.status-verified {
+  color: var(--green);
+  border-color: rgba(101,244,191,.24);
+}
+.status-wont_fix {
+  color: #9db4c3;
+}
+.rowType + h3 { overflow-wrap: anywhere; }
+
+@media (max-width: 760px) {
+  .qaLauncher,
+  .bugGrid {
+    grid-template-columns: 1fr;
+  }
+}

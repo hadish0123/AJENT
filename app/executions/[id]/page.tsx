@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getExecutionBundle } from "@/lib/execution-db";
+import { listExecutionQARuns } from "@/lib/qa-db";
+import type { QARunRecord } from "@/lib/qa";
+import StartQAPanel from "./start-qa-panel";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +21,15 @@ export default async function ExecutionPage({ params }: { params: Promise<{ id: 
 
   const { execution, project, changes, checks, mergeGate, github } = bundle;
 
+  let qaRuns: QARunRecord[] = [];
+  try {
+    qaRuns = await listExecutionQARuns(execution.id);
+  } catch {
+    qaRuns = [];
+  }
+
+  const canStartQA = ["review_ready", "completed"].includes(execution.status);
+
   return (
     <main className="workspacePage">
       <header className="workspaceHeader">
@@ -34,7 +46,7 @@ export default async function ExecutionPage({ params }: { params: Promise<{ id: 
       <section className="projectSummaryGrid">
         <article className="summaryCard"><span>Plan Items</span><strong>{execution.plan.items.length}</strong></article>
         <article className="summaryCard"><span>Changes</span><strong>{changes.length}</strong></article>
-        <article className="summaryCard"><span>Checks</span><strong>{checks.length}</strong></article>
+        <article className="summaryCard"><span>QA Runs</span><strong>{qaRuns.length}</strong></article>
         <article className="summaryCard"><span>Merge Gate</span><strong>{mergeGate.ready ? "READY" : "BLOCKED"}</strong></article>
       </section>
 
@@ -123,6 +135,36 @@ export default async function ExecutionPage({ params }: { params: Promise<{ id: 
         {execution.prUrl ? (
           <a className="ghostButton" href={execution.prUrl} target="_blank" rel="noreferrer">Open Pull Request</a>
         ) : null}
+      </section>
+
+      <section className="sectionBlock">
+        <div className="sectionHeading">
+          <div><span className="eyebrow">QA & BROWSER</span><h2>Validate before delivery.</h2></div>
+          <span className="muted">CI + Playwright + live Browser Operator</span>
+        </div>
+
+        {qaRuns.length ? (
+          <div className="runList">
+            {qaRuns.slice(0, 5).map((qaRun) => (
+              <Link className="runRow" href={`/qa/${qaRun.id}`} key={qaRun.id}>
+                <div>
+                  <strong>{qaRun.source}</strong>
+                  <span>{qaRun.targetUrl || "local CI browser target"}</span>
+                </div>
+                <span className={`statusTag status-${qaRun.status}`}>{qaRun.status}</span>
+              </Link>
+            ))}
+          </div>
+        ) : null}
+
+        {canStartQA ? (
+          <StartQAPanel executionId={execution.id} />
+        ) : (
+          <div className="emptyState compactEmpty">
+            <h3>QA waits for GitHub execution readiness.</h3>
+            <p>Finish the PR/review flow, then launch automated and live browser validation.</p>
+          </div>
+        )}
       </section>
 
       <section className="sectionBlock">

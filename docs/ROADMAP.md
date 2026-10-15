@@ -49,10 +49,17 @@
 
 ## Phase 05 — QA & browser testing — 65%
 
-- Build and type checks
-- Automated test pipeline
-- Browser validation
-- Bug loop
+- [x] Durable QA run/check/bug model
+- [x] Typecheck gate
+- [x] Unit-test pipeline with Vitest
+- [x] Production build gate
+- [x] Chromium browser smoke tests with Playwright
+- [x] Playwright traces/screenshots/report artifacts on failure
+- [x] Live PRIME Browser Operator validation contract
+- [x] QA dashboard and tool-facing APIs
+- [x] Bug severity/status/assignment/fixed-commit tracking
+- [x] Automatic bug loop back to building/coding
+- [x] QA gate requiring all checks green and zero unresolved bugs
 
 ## Phase 06 — Railway delivery — 80%
 
