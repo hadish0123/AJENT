@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { qaCheckSchema } from "@/lib/qa";
 import { upsertQACheck } from "@/lib/qa-db";
+import { auditMutation } from "@/lib/audit";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,7 @@ export async function POST(request: Request, context: Context) {
     }
 
     const check = await upsertQACheck(id, parsed.data);
+    await auditMutation(request, { action: "qa.check", resourceType: "qa", resourceId: id, metadata: { name: check.name, status: check.status } });
     return NextResponse.json({ check }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
