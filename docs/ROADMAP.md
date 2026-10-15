@@ -97,9 +97,17 @@
 
 ## Phase 08 — Production hardening — 100%
 
-- Auth
-- Audit log
-- Permissions
-- Recovery
-- Documentation
-- End-to-end acceptance
+- [x] Private password authentication
+- [x] Signed HttpOnly session cookies
+- [x] Owner/auditor role permissions
+- [x] Same-origin mutation protection
+- [x] Security headers and CSP
+- [x] Login rate limiting
+- [x] Durable PostgreSQL audit log
+- [x] Mutation/tool-handoff audit events
+- [x] Recovery controls for project/execution/QA/delivery state
+- [x] Readiness endpoint
+- [x] PostgreSQL-backed authenticated CI
+- [x] Full intake → council → GitHub → QA → delivery acceptance test
+- [x] Final operational documentation
+- [x] Production-readiness checklist
