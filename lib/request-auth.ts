@@ -23,7 +23,12 @@ function parseCookieHeader(header: string | null) {
 export async function getRequestPrincipal(
   request: Request,
 ): Promise<SessionPrincipal | null> {
-  if (process.env.HADI_STUDIO_AUTH_REQUIRED !== "true") {
+  const setting = process.env.HADI_STUDIO_AUTH_REQUIRED;
+  const required =
+    setting === "true" ||
+    (process.env.NODE_ENV === "production" && setting !== "false");
+
+  if (!required) {
     return { sub: "local-development", role: "owner" };
   }
 
