@@ -19,7 +19,7 @@ Use ChatGPT as the reasoning/orchestration layer and GitHub + Railway + browser 
 
 ## Current phase
 
-Foundation / Phase 01 — approximately 10%.
+Project Intake / Phase 02 — 20%.
 
 ## Local development
 
@@ -30,6 +30,12 @@ npm run dev
 
 Open http://localhost:3000
 
+## Required environment
+
+```env
+DATABASE_URL=postgresql://user:password@host:5432/database
+```
+
 ## Health check
 
 `GET /api/health`
@@ -37,3 +43,18 @@ Open http://localhost:3000
 ## Agent registry
 
 `GET /api/agents`
+
+## Project API
+
+- `GET /api/projects`
+- `POST /api/projects`
+- `GET /api/projects/:id`
+- `PATCH /api/projects/:id`
+
+## Persistence
+
+The Phase 02 persistence layer uses PostgreSQL. The application creates the required project table and index on first access. The SQL reference migration is also stored in `db/001_projects.sql`.
+
+## Delivery status
+
+GitHub foundation and Phase 02 are complete. Railway deployment remains blocked until the connected Railway account can create new projects.

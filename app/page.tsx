@@ -21,38 +21,38 @@ export default function HomePage() {
           </span>
         </a>
         <div className="topActions">
-          <span className="statusPill"><i /> SYSTEM FOUNDATION</span>
-          <button className="ghostButton">Private Workspace</button>
+          <span className="statusPill"><i /> PROJECT INTAKE ONLINE</span>
+          <a className="ghostButton" href="/projects">Private Workspace</a>
         </div>
       </header>
 
       <section className="hero">
         <div className="heroCopy">
-          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 01</span>
+          <span className="eyebrow">AI SOFTWARE FACTORY / PHASE 02</span>
           <h1>Build serious software with a private agent team.</h1>
           <p>
             ChatGPT is the brain. GitHub is the source of truth. Railway is the deployment layer.
             HADI Dev Studio coordinates specialist roles from requirements to production.
           </p>
           <div className="heroActions">
-            <button className="primaryButton">+ New Project</button>
+            <a className="primaryButton" href="/projects/new">+ New Project</a>
             <a className="textLink" href="#agents">View Agent Team →</a>
           </div>
         </div>
 
         <aside className="progressCard">
           <div className="progressHeader">
-            <span>AJENT Foundation</span>
-            <strong>10%</strong>
+            <span>AJENT / HADI Dev Studio</span>
+            <strong>20%</strong>
           </div>
-          <div className="progressTrack"><div className="progressValue" /></div>
+          <div className="progressTrack"><div className="progressValue progress20" /></div>
           <ul className="checkList">
             <li className="done">Plugin workflow created</li>
             <li className="done">GitHub foundation initialized</li>
             <li className="done">Agent registry online</li>
-            <li>Project persistence</li>
-            <li>Execution & test pipeline</li>
-            <li>Railway production deployment</li>
+            <li className="done">Project persistence</li>
+            <li className="done">Project intake + task graph</li>
+            <li>Agent orchestration engine</li>
           </ul>
         </aside>
       </section>
