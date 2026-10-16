@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: ajent-hadi-dev-studio
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: HADI_STUDIO_AUTH_REQUIRED
+        value: "true"
+      - key: HADI_STUDIO_OWNER
+        value: "hadi"
+      - key: HADI_STUDIO_PASSWORD
+        sync: false
+      - key: HADI_AUTH_SECRET
+        sync: false
